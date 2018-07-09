@@ -28,6 +28,11 @@
 
 	<dependencies>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
 		<dependency>
 		<groupId>com.github.pagehelper</groupId>
 		<artifactId>pagehelper-spring-boot-starter</artifactId>
@@ -78,13 +83,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools </artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.github.pagehelper</groupId>
-			<artifactId>pagehelper</artifactId>
-		</dependency>
-
-
-		<dependency>
+        <dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>

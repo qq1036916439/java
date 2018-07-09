@@ -1,6 +1,6 @@
 package com.zzq.service;
 
-import com.sun.xml.internal.ws.developer.Serialization;
+import com.github.pagehelper.PageHelper;
 import com.zzq.mapper.UserMapper;
 import com.zzq.pojo.User;
 import com.zzq.pojo.UserExample;
@@ -15,8 +15,9 @@ public class LoginService {
     @Autowired
     private UserMapper userMapper;
 
-  @Cacheable(cacheNames = "user",key = "#user.username")
+ //@Cacheable(cacheNames = "user",key = "#user.username")
     public User Login(User user){
+      PageHelper.startPage(1,2);
        System.out.println("查询数据");
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria().andPasswordEqualTo(user.getPassword()).andUsernameEqualTo(user.getUsername());

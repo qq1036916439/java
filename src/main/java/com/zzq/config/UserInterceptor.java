@@ -13,7 +13,7 @@ public class UserInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Object username = request.getSession().getAttribute("user");
         if(username==null){
-            response.sendRedirect("login.html");
+            response.sendRedirect("/login.html");
             return false;
         }
           return true;

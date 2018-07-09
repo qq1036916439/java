@@ -31,7 +31,15 @@ debug: true
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
-
+pagehelper:
+  auto-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  offset-as-page-num: true
+  row-bounds-with-count: true
+server:
+  servlet:
+    path: /
   # 指定全局配置文件位置
  # config-location: classpath:mybatis/mybatis-config.xml
   # 指定sql映射文件位置

@@ -12,10 +12,10 @@ public class Viewresolution {
         return "welcome";
     }
 
-    @RequestMapping("/member-list.html")
+   /* @RequestMapping("/member-list.html")
     public String Memberlist(){
         return "member-list";
-    }
+    }*/
     @RequestMapping("/member-del.html")
     public String MemberDel(){
         return "member-del";
@@ -32,8 +32,7 @@ public class Viewresolution {
     public String AdminCate(){
         return "admin-cate";
     }
-
-    @RequestMapping("/admin-role.html")
+  @RequestMapping("/admin-role.html")
     public String AdminRole(){
         return "admin-role";
     }

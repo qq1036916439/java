@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class LoginCintroller {
+public class LoginController {
 
     @Autowired
     private LoginService loginService;
@@ -21,7 +21,7 @@ public class LoginCintroller {
      User logu = loginService.Login(user);
      if(logu!=null){
             request.getSession().setAttribute("user",logu);
-            return "index";
+            return "redirect:/";
         }
         request.setAttribute("username",user.getUsername());
         request.setAttribute("error","用户名密码错误");
