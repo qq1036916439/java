@@ -16,6 +16,7 @@ public class Viewresolution {
     public String Memberlist(){
         return "member-list";
     }*/
+
     @RequestMapping("/member-del.html")
     public String MemberDel(){
         return "member-del";

@@ -82,6 +82,8 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools </artifactId>
+            <optional>true</optional>
+         <scope>true</scope>
 		</dependency>
         <dependency>
 			<groupId>mysql</groupId>
@@ -103,6 +105,7 @@
 				<configuration>
 					<mainClass>com.zzq.ShixunApplication</mainClass>
                     <classesDirectory>1.8</classesDirectory>
+                    <fork>true</fork>
                 </configuration>
 
 				<executions>

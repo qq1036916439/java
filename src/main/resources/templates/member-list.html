@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">>
+<html xmlns:th="http://www.thymeleaf.org">
   
   <head>
     <meta charset="UTF-8">
@@ -38,8 +38,8 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>添加</button>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','/teacher/addView',600,400)"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px">共有数据：[[${page.total}]]</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -58,13 +58,13 @@
             <th>操作</th></tr>
         </thead>
         <tbody>
-          <tr th:each="list : ${teacherlist}">
+          <tr th:each="list : ${page.list}">
             <td >
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" th:attr="data-id=${list.teaId}"  data-id="#[{list.teaId}]"><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td th:text="${list.teaId}">list</td>
             <td th:text="${list.teaName}">小明</td>
-            <td th:text="${list.teaSex}">男</td>
+            <td th:text="${list.teaSex}==0?'女':'男'">男</td>
             <td th:text="${list.teaTel}">13000000000</td>
             <td th:text="${list.teaColl}">admin@mail.com</td>
             <td th:text="${list.account}">北京市 海淀区</td>
@@ -76,7 +76,7 @@
               <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
                 <i class="layui-icon">&#xe601;</i>
               </a>
-              <a title="编辑"  onclick="x_admin_show('编辑','member-edit.html',600,400)" href="javascript:;">
+              <a title="编辑"  th:onclick="|x_admin_show('编辑','/teacher/sel/${list.teaId}',600,400)|"  href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a onclick="x_admin_show('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">
@@ -92,12 +92,11 @@
       </table>
       <div class="page">
         <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
+            <a class="prev" th:if="${page.currentPage}>1" href="/teacher/list/?currentPage=1">首页</a>
+          <a class="prev" th:if="${page.currentPage}>1" th:href="'/teacher/list/?currentPage='+(${page.currentPage}-1)">上一页</a>
+          <span class="current">当前页:[[${page.currentPage}]]</span>
+           <a class="next" th:if="${page.currentPage}<${page.total}" th:href="'/teacher/list/?currentPage='+(${page.currentPage}+1)">下一页</a>
+            <a class="next" th:if="${page.currentPage}<${page.total}" th:href="'/teacher/list/?currentPage='+${page.total}">尾页</a>
         </div>
       </div>
 
@@ -105,7 +104,6 @@
     <script>
       layui.use('laydate', function(){
         var laydate = layui.laydate;
-        
         //执行一个laydate实例
         laydate.render({
           elem: '#start' //指定元素
@@ -120,10 +118,8 @@
        /*用户-停用*/
       function member_stop(obj,id){
           layer.confirm('确认要停用吗？',function(index){
-
-              if($(obj).attr('title')=='启用'){
-
-                //发异步把用户状态进行更改
+           if($(obj).attr('title')=='启用'){
+               //发异步把用户状态进行更改
                 $(obj).attr('title','停用')
                 $(obj).find('i').html('&#xe62f;');
 
@@ -145,31 +141,41 @@
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
          //发异步删除数据
-              $.ajax({
-                  type: "delete",
-                  url: "/teacher/del/"+id,
-                  success: function(msg){
-                    if(msg==='1')
-                    { $(obj).parents("tr").remove();
-                      layer.msg('已删除!',{icon:1,time:1000});
+              id={'ids[]':id}
+              $.post("/teacher/del",id, function(data){
+                  if(data==1)
+                  { $(obj).parents("tr").remove();
+                      layer.msg('删除失败!',{icon:1,time:1000});
+
                   }else{
-                        layer.msg('删除失败!',{icon:1,time:1000});
-                    }
+                      layer.msg('已删除!',{icon:1,time:1000});
+                      $(obj).parents("tr").remove();
                   }
-                });
+
+              });
         });
       }
 
 
 
       function delAll (argument) {
-
-        var data = tableCheck.getData();
-  
-        layer.confirm('确认要删除吗？'+data,function(index){
+          var ids = tableCheck.getData();
+          ids={ids:ids}
+         layer.confirm('确认要删除吗？'+ids,function(index){
             //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
+
+             $.post("/teacher/del",ids, function(data){
+                 if(data==='1')
+                 { $(obj).parents("tr").remove();
+                     layer.msg('删除失败!',{icon:1,time:1000});
+
+                 }else{
+               layer.msg('删除成功', {icon: 1});
+                     $(".layui-form-checked").not('.header').parents('tr').remove();
+                 }
+
+              });
+
         });
       }
     </script>

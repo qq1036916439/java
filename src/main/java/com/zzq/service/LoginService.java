@@ -14,8 +14,7 @@ public class LoginService {
 
     @Autowired
     private UserMapper userMapper;
-
- //@Cacheable(cacheNames = "user",key = "#user.username")
+//@Cacheable(cacheNames = "user",key = "#user.username")
     public User Login(User user){
       PageHelper.startPage(1,2);
        System.out.println("查询数据");

@@ -40,6 +40,7 @@ pagehelper:
 server:
   servlet:
     path: /
+  port: 9000
   # 指定全局配置文件位置
  # config-location: classpath:mybatis/mybatis-config.xml
   # 指定sql映射文件位置
