@@ -30,8 +30,7 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-          <input class="layui-input" placeholder="开始日" name="start" id="start">
-          <input class="layui-input" placeholder="截止日" name="end" id="end">
+
           <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
@@ -92,11 +91,11 @@
       </table>
       <div class="page">
         <div>
-            <a class="prev" th:if="${page.currentPage}>1" href="/teacher/list/?currentPage=1">首页</a>
-          <a class="prev" th:if="${page.currentPage}>1" th:href="'/teacher/list/?currentPage='+(${page.currentPage}-1)">上一页</a>
+            <a class="prev" th:if="${page.currentPage}>1" href="/teacher/list?currentPage=1">首页</a>
+          <a class="prev" th:if="${page.currentPage}>1" th:href="'/teacher/list?currentPage='+(${page.currentPage}-1)">上一页</a>
           <span class="current">当前页:[[${page.currentPage}]]</span>
-           <a class="next" th:if="${page.currentPage}<${page.total}" th:href="'/teacher/list/?currentPage='+(${page.currentPage}+1)">下一页</a>
-            <a class="next" th:if="${page.currentPage}<${page.total}" th:href="'/teacher/list/?currentPage='+${page.total}">尾页</a>
+           <a class="next" th:if="${page.currentPage}<${page.total}" th:href="'/teacher/list?currentPage='+(${page.currentPage}+1)">下一页</a>
+            <a class="next" th:if="${page.currentPage}<${page.total}" th:href="'/teacher/list?currentPage='+${page.totalPages}">尾页</a>
         </div>
       </div>
 

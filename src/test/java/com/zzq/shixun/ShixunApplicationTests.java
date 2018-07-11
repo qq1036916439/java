@@ -2,7 +2,10 @@ package com.zzq.shixun;
 
 
 import com.github.pagehelper.PageHelper;
+import com.zzq.mapper.StudentMapper;
 import com.zzq.mapper.TeaMapper;
+import com.zzq.pojo.Student;
+import com.zzq.pojo.TeaExample;
 import com.zzq.utils.PageUtil;
 import com.zzq.pojo.Tea;
 import lombok.extern.slf4j.Slf4j;
@@ -25,12 +28,19 @@ public class ShixunApplicationTests {
     private RedisTemplate redisTemplate;
     @Autowired
     private TeaMapper teaMapper;
+    @Autowired
+    private StudentMapper studentMapper;
     @Test
     public void contextLoads() {
         for (int i = 0; i <100 ; i++) {
-            Tea tea = new Tea();
-            tea.setPassword("666");
-            teaMapper.insert(tea);
+            Student tea = new Student();
+            tea.setName("AS");
+
+            tea.setDepart("asASd");
+            tea.setPhone("1SA3");
+            tea.setStatus(1);
+            tea.setSex(1);
+            studentMapper.insert(tea);
         }
 
       //  redisTemplate.opsForSet().add(new User(1, "asd", "adsa"), new User(1, "asd", "adsa"));
@@ -40,10 +50,21 @@ public class ShixunApplicationTests {
 
 
         int i = teaMapper.selectCount();
+        TeaExample teaExample = new TeaExample();
+        TeaExample.Criteria criteria = teaExample.createCriteria();
+        criteria.andTeaNameLike("%张%");
+        teaMapper.selectByExample(teaExample);
         PageUtil<Tea> teaPageUtil = new PageUtil<>();
         PageHelper.startPage(1,3);
         List<Tea> teas = teaMapper.selectByExample(null);
         teaPageUtil.setTotal(i);
         teaPageUtil.setList(teas);
+    }
+    @Test
+    public void test1(){
+        double l=2.5;
+        double j = (double)376/(double)10;
+       int ceil =(int) Math.ceil(l);
+        log.info(ceil+""+j);
     }
 }

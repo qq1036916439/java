@@ -61,7 +61,7 @@
             是否生成 example类 -->
 
 
-       <table schema="" tableName="userinfo">
+       <table schema="" tableName="student">
 
     </table>
 

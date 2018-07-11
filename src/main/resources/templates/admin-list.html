@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-  
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
     <title>*****</title>
@@ -8,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/xadmin.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
    
   </head>
   
@@ -38,8 +37,8 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','./admin-add.html')"><i class="layui-icon"></i>添加</button>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <button class="layui-btn" onclick="x_admin_show('增加学生','/student/addView')"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px">共有数据：[[${page.total}]]</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -48,35 +47,33 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
-            <th>登录名</th>
-            <th>手机</th>
-            <th>邮箱</th>
-            <th>角色</th>
-            <th>加入时间</th>
-            <th>状态</th>
-            <th>操作</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>电话</th><TH>状态</TH>
+            <th>学院</th>
+
         </thead>
         <tbody>
-          <tr>
+        <tr th:each="list : ${page.list}">
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" th:attr="data-id=${list.stuId}"><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td>1</td>
-            <td>admin</td>
-            <td>18925139194</td>
-            <td>113664000@qq.com</td>
-            <td>超级管理员</td>
-            <td>2017-01-01 11:11:42</td>
+            <td th:text="${list.stuId}"></td>
+            <td th:text="${list.name}"></td>
+            <td th:text="${list.sex}==1?'男':'女'"></td>
+            <td th:text="${list.phone}">113664000@qq.com</td>
+            <td th:text="${list.status}==1?'在读':'离校'">超级管理员</td>
+            <td th:text="${list.depart}"></td>
             <td class="td-status">
               <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
             <td class="td-manage">
               <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
                 <i class="layui-icon">&#xe601;</i>
               </a>
-              <a title="编辑"  onclick="x_admin_show('编辑','admin-edit.html')" href="javascript:;">
+              <a title="编辑"  th:onclick="|x_admin_show('编辑','/student/sel/${list.stuId}')|" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+              <a title="删除" th:onclick="|member_del(this,'${list.stuId}')|" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
@@ -85,12 +82,11 @@
       </table>
       <div class="page">
         <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
+            <a class="prev" th:if="${page.currentPage}>1" href="/student/list?currentPage=1">首页</a>
+            <a class="prev" th:if="${page.currentPage}>1" th:href="'/student/list?currentPage='+(${page.currentPage}-1)">上一页</a>
+            <span class="current">当前页:[[${page.currentPage}]]</span>
+            <a class="next" th:if="${page.currentPage}<${page.total}" th:href="'/student/list?currentPage='+(${page.currentPage}+1)">下一页</a>
+            <a class="next" th:if="${page.currentPage}<${page.total}" th:href="'/student/list?currentPage='+${page.totalPages}">尾页</a>
         </div>
       </div>
 
@@ -138,30 +134,44 @@
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
               //发异步删除数据
-              $(obj).parents("tr").remove();
-              layer.msg('已删除!',{icon:1,time:1000});
+              id={'ids[]':id}
+              $.post("/student/del",id, function(data){
+                  if(data==1)
+                  { $(obj).parents("tr").remove();
+                      layer.msg('删除失败!',{icon:1,time:1000});
+
+                  }else{
+                      layer.msg('已删除!',{icon:1,time:1000});
+                      $(obj).parents("tr").remove();
+                  }
+
+              });
           });
       }
 
 
 
       function delAll (argument) {
+          var ids = tableCheck.getData();
+          alert(ids);
+          ids={ids:ids}
+          layer.confirm('确认要删除吗？'+ids,function(index){
+              //捉到所有被选中的，发异步进行删除
+               $.post("/student/del",ids, function(data){
+                  if(data==='1')
+                  { $(obj).parents("tr").remove();
+                      layer.msg('删除失败!',{icon:1,time:1000});
 
-        var data = tableCheck.getData();
-  
-        layer.confirm('确认要删除吗？'+data,function(index){
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
-      }
-    </script>
-    <script>var _hmt = _hmt || []; (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-      })();</script>
+                  }else{
+                      layer.msg('删除成功', {icon: 1});
+                      $(".layui-form-checked").not('.header').parents('tr').remove();
+                  }
+
+              });
+
+          });
+
+      }</script>
   </body>
 
 </html>
