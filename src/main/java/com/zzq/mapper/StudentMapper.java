@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StudentMapper {
     int countByExample(StudentExample example);
-   int selectCount();
+     int selectCount();
     int deleteByExample(StudentExample example);
 
     int deleteByPrimaryKey(Integer stuId);

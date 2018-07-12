@@ -22,12 +22,12 @@ public class TeacherService {
     public PageUtil page(Integer currentPage){
         PageUtil<Tea> teaPageUtil = new PageUtil<>();
         int i = teaMapper.selectCount();
-        int ceil = (int)Math.ceil((double) i / (double) 10);
+        int ceil = (int)Math.ceil((double) i / (double) 5);
         teaPageUtil.setTotal(i);
-        teaPageUtil.setEachPage(10);
+        teaPageUtil.setEachPage(5);
         teaPageUtil.setCurrentPage(currentPage);
         teaPageUtil.setTotalPages(ceil);
-        PageHelper.startPage(currentPage, 10);
+        PageHelper.startPage(currentPage, 5);
         List<Tea> teas = teaMapper.selectByExample(null);
         teaPageUtil.setList(teas);
         return teaPageUtil;

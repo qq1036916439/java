@@ -94,8 +94,8 @@
             <a class="prev" th:if="${page.currentPage}>1" href="/teacher/list?currentPage=1">首页</a>
           <a class="prev" th:if="${page.currentPage}>1" th:href="'/teacher/list?currentPage='+(${page.currentPage}-1)">上一页</a>
           <span class="current">当前页:[[${page.currentPage}]]</span>
-           <a class="next" th:if="${page.currentPage}<${page.total}" th:href="'/teacher/list?currentPage='+(${page.currentPage}+1)">下一页</a>
-            <a class="next" th:if="${page.currentPage}<${page.total}" th:href="'/teacher/list?currentPage='+${page.totalPages}">尾页</a>
+           <a class="next" th:if="${page.currentPage}<${page.totalPages}" th:href="'/teacher/list?currentPage='+(${page.currentPage}+1)">下一页</a>
+            <a class="next" th:if="${page.currentPage}!=${page.totalPages}" th:href="'/teacher/list?currentPage='+${page.totalPages}">尾页</a>
         </div>
       </div>
 

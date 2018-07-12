@@ -67,7 +67,7 @@
             <td class="td-status">
               <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
             <td class="td-manage">
-              <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
+              <a th:onclick="|x_admin_show('修改成绩','/Score/editView/${list.stuId}')|" href="javascript:;"  title="錄入成績">
                 <i class="layui-icon">&#xe601;</i>
               </a>
               <a title="编辑"  th:onclick="|x_admin_show('编辑','/student/sel/${list.stuId}')|" href="javascript:;">
@@ -85,8 +85,8 @@
             <a class="prev" th:if="${page.currentPage}>1" href="/student/list?currentPage=1">首页</a>
             <a class="prev" th:if="${page.currentPage}>1" th:href="'/student/list?currentPage='+(${page.currentPage}-1)">上一页</a>
             <span class="current">当前页:[[${page.currentPage}]]</span>
-            <a class="next" th:if="${page.currentPage}<${page.total}" th:href="'/student/list?currentPage='+(${page.currentPage}+1)">下一页</a>
-            <a class="next" th:if="${page.currentPage}<${page.total}" th:href="'/student/list?currentPage='+${page.totalPages}">尾页</a>
+            <a class="next" th:if="${page.currentPage}<${page.totalPages}" th:href="'/student/list?currentPage='+(${page.currentPage}+1)">下一页</a>
+            <a class="next" th:if="${page.currentPage}!=${page.totalPages}" th:href="'/student/list?currentPage='+${page.totalPages}">尾页</a>
         </div>
       </div>
 
@@ -153,8 +153,7 @@
 
       function delAll (argument) {
           var ids = tableCheck.getData();
-          alert(ids);
-          ids={ids:ids}
+             ids={ids:ids}
           layer.confirm('确认要删除吗？'+ids,function(index){
               //捉到所有被选中的，发异步进行删除
                $.post("/student/del",ids, function(data){
@@ -170,8 +169,8 @@
               });
 
           });
-
-      }</script>
+              }
+    </script>
   </body>
 
 </html>

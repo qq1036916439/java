@@ -271,7 +271,7 @@
       </if>
       <if test="teaImg != null" >
         tea_img = #{teaImg,jdbcType=VARCHAR},
-      </if>
+    </if>
     </set>
     where tea_id = #{teaId,jdbcType=INTEGER}
   </update>

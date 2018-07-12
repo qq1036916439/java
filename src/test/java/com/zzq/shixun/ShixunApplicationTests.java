@@ -2,9 +2,12 @@ package com.zzq.shixun;
 
 
 import com.github.pagehelper.PageHelper;
+import com.zzq.mapper.CurriculumMapper;
+import com.zzq.mapper.ScoreMapper;
 import com.zzq.mapper.StudentMapper;
 import com.zzq.mapper.TeaMapper;
-import com.zzq.pojo.Student;
+import com.zzq.pojo.Curriculum;
+import com.zzq.pojo.SourceBean;
 import com.zzq.pojo.TeaExample;
 import com.zzq.utils.PageUtil;
 import com.zzq.pojo.Tea;
@@ -30,21 +33,26 @@ public class ShixunApplicationTests {
     private TeaMapper teaMapper;
     @Autowired
     private StudentMapper studentMapper;
+    @Autowired
+    private CurriculumMapper curriculumMapper;
+    @Autowired
+    private ScoreMapper scoreMapper;
     @Test
     public void contextLoads() {
-        for (int i = 0; i <100 ; i++) {
-            Student tea = new Student();
-            tea.setName("AS");
-
-            tea.setDepart("asASd");
-            tea.setPhone("1SA3");
+        for (int i = 0; i <20 ; i++) {
+            Tea tea = new Tea();
             tea.setStatus(1);
-            tea.setSex(1);
-            studentMapper.insert(tea);
+            tea.setPassword("123456");
+            tea.setAccount("123");
+            tea.setTeaTel("1234568889");
+            tea.setTeaColl("123456");
+            teaMapper.insert(tea);
         }
 
-      //  redisTemplate.opsForSet().add(new User(1, "asd", "adsa"), new User(1, "asd", "adsa"));
     }
+
+      //  redisTemplate.opsForSet().add(new User(1, "asd", "adsa"), new User(1, "asd", "adsa"));
+
 	@Test
 	public void test() {
 

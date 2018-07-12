@@ -3,7 +3,6 @@ package com.zzq.service;
 import com.github.pagehelper.PageHelper;
 import com.zzq.mapper.StudentMapper;
 import com.zzq.pojo.Student;
-import com.zzq.pojo.Tea;
 import com.zzq.utils.PageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +19,13 @@ public class StudentService {
         PageUtil<Student> teaPageUtil = new PageUtil<>();
         int i = studentMapper.selectCount();
 
-        double dceil = Math.ceil((double) i / (double)10);
+        double dceil = Math.ceil((double) i / (double)5);
         int j=(int) dceil;
         teaPageUtil.setTotal(i);
-        teaPageUtil.setEachPage(10);
+        teaPageUtil.setEachPage(5);
         teaPageUtil.setCurrentPage(currentPage);
         teaPageUtil.setTotalPages(j);
-        PageHelper.startPage(currentPage, 10);
+        PageHelper.startPage(currentPage, 5);
         List<Student> students = studentMapper.selectByExample(null);
         teaPageUtil.setList(students);
         return teaPageUtil;
