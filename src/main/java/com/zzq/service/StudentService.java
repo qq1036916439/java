@@ -62,4 +62,9 @@ public class StudentService {
     public Student getStuabyId(Integer id) {
        return studentMapper.selectByPrimaryKey(id);
     }
+
+    public List<Student> getSelectStu() {
+        List<Student> students = studentMapper.selectByExample(null);
+        return students;
+    }
 }

@@ -156,7 +156,22 @@
         <result property="curriculmName" column="curriculum_name"></result>
         <result property="score" column="score"></result>
     </resultMap>
-    <select id="selectSource" parameterType="Integer" resultMap="stuId" >
+    <select id="selectSourcebyStu" parameterType="Integer" resultMap="stuId" >
+        SELECT st.`name`,st.`stu_id`,c.`curriculum_ID`,
+        c.`curriculum_name`,
+        s.`score`
+        FROM
+        score AS s,curriculum AS c, student AS st
+        <where>
+           s.`stu_id`=st.`stu_id` AND s.`curriculum_ID`=c.`curriculum_ID`
+
+            <if test="#{0}!=null">
+                and st.stu_id= #{0}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectSourcebyCur" parameterType="Integer" resultMap="stuId" >
         SELECT st.`name`,st.`stu_id`,c.`curriculum_ID`,
         c.`curriculum_name`,
         s.`score`
@@ -164,8 +179,9 @@
         score AS s,curriculum AS c, student AS st
         <where>
             s.`stu_id`=st.`stu_id` AND s.`curriculum_ID`=c.`curriculum_ID`
+
             <if test="#{0}!=null">
-                and st.stu_id= #{0}
+                and c.`curriculum_ID`= #{0}
             </if>
         </where>
     </select>

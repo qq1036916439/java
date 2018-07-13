@@ -18,6 +18,9 @@ public class CurriculumControler {
 
     @Autowired
     private CurriculumService curriculumService;
+
+
+
     @GetMapping("/curriculum/sel/{id}")
     public String getTeacherbyId(@PathVariable("id") Integer id, Model model){
         Curriculum curriculum= curriculumService.getCurriculumbyId(id);

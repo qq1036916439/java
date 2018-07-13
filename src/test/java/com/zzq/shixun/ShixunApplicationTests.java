@@ -39,16 +39,8 @@ public class ShixunApplicationTests {
     private ScoreMapper scoreMapper;
     @Test
     public void contextLoads() {
-        for (int i = 0; i <20 ; i++) {
-            Tea tea = new Tea();
-            tea.setStatus(1);
-            tea.setPassword("123456");
-            tea.setAccount("123");
-            tea.setTeaTel("1234568889");
-            tea.setTeaColl("123456");
-            teaMapper.insert(tea);
-        }
-
+       // List<SourceBean> sourceBeans = scoreMapper.selectSource(null);
+      //  System.out.println(sourceBeans.size());
     }
 
       //  redisTemplate.opsForSet().add(new User(1, "asd", "adsa"), new User(1, "asd", "adsa"));

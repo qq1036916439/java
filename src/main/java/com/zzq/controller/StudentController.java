@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class StudentController {
         @Autowired
@@ -18,6 +20,15 @@ public class StudentController {
         model.addAttribute("stu",student);
         return "admin-add";
     }
+
+   @ResponseBody
+    @GetMapping("/student/sel/json")
+    public List<Student> getSelectStu(){
+       List<Student> selectStu = studentService.getSelectStu();
+
+        return selectStu;
+    }
+
     @ResponseBody
     @PostMapping("/student/add")
     public String addStudent(Student student){
