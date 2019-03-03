@@ -1,14 +1,16 @@
 package com.zzq.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 /**
  * 进行视图解析
  */
-import org.springframework.web.bind.annotation.RequestMapping;
+
 @Controller
 public class Viewresolution {
     @RequestMapping("/welcome.html")
-    public String Welcome(){
+    public String Welcome() {
         return "welcome";
     }
 
@@ -18,36 +20,42 @@ public class Viewresolution {
     }*/
 
     @RequestMapping("/member-del.html")
-    public String MemberDel(){
+    public String MemberDel() {
         return "member-del";
     }
+
     @RequestMapping("/order-list.html")
-    public String OrderList(){
+    public String OrderList() {
         return "order-list";
     }
+
     @RequestMapping("/admin-list.html")
-    public String Adminlist(){
+    public String Adminlist() {
         return "admin-list";
     }
+
     @RequestMapping("/admin-cate.html")
-    public String AdminCate(){
+    public String AdminCate() {
         return "admin-cate";
     }
-  @RequestMapping("/admin-role.html")
-    public String AdminRole(){
+
+    @RequestMapping("/admin-role.html")
+    public String AdminRole() {
         return "admin-role";
     }
+
     @RequestMapping("/admin-rule.html")
-    public String AdminRule(){
+    public String AdminRule() {
         return "admin-rule";
     }
 
     @RequestMapping("/login.html")
-    public String Login(){
+    public String Login() {
         return "login";
     }
+
     @RequestMapping("/")
-    public String demo(){
+    public String demo() {
         return "index";
     }
 }

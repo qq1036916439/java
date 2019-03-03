@@ -17,7 +17,7 @@ import java.util.Enumeration;
 import java.util.List;
 @Slf4j
 @Controller
-public class TeacherController {
+public class  TeacherController {
     @Autowired
     private TeacherService teacherService;
 
