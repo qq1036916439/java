@@ -13,18 +13,19 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
+
     /*
           登录验证
      */
- @RequestMapping("/log")
-    public String UserPast(User user, HttpServletRequest request){
-     User logu = loginService.Login(user);
-     if(logu!=null){
-            request.getSession().setAttribute("user",logu);
+    @RequestMapping("/log")
+    public String UserPast(User user, HttpServletRequest request) {
+        User logu = loginService.Login(user);
+        if (logu != null) {
+            request.getSession().setAttribute("user", logu);
             return "redirect:/";
         }
-        request.setAttribute("username",user.getUsername());
-        request.setAttribute("error","用户名密码错误");
+        request.setAttribute("username", user.getUsername());
+        request.setAttribute("error", "用户名密码错误");
         return "login";
     }
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Slf4j
 @Service
 public class CurriculumService {
@@ -16,13 +17,13 @@ public class CurriculumService {
     @Autowired
     private CurriculumMapper curriculumMapper;
 
-    public List<Curriculum> selectAllCur(){
+    public List<Curriculum> selectAllCur() {
         return curriculumMapper.selectByExample(null);
 
     }
 
-    public  int editCur(Curriculum curriculum){
-       return curriculumMapper.updateByPrimaryKey(curriculum);
+    public int editCur(Curriculum curriculum) {
+        return curriculumMapper.updateByPrimaryKey(curriculum);
 
     }
 
@@ -30,8 +31,8 @@ public class CurriculumService {
         PageUtil<Curriculum> teaPageUtil = new PageUtil<>();
         int i = curriculumMapper.selectCount();
 
-        double dceil = Math.ceil((double) i / (double)5);
-        int j=(int) dceil;
+        double dceil = Math.ceil((double) i / (double) 5);
+        int j = (int) dceil;
         teaPageUtil.setTotal(i);
         teaPageUtil.setEachPage(5);
         teaPageUtil.setCurrentPage(currentPage);
@@ -56,8 +57,6 @@ public class CurriculumService {
     }
 
     public int addCur(Curriculum curriculum) {
-
-
 
 
         return curriculumMapper.insert(curriculum);

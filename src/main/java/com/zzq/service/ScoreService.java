@@ -14,16 +14,18 @@ import java.util.List;
 public class ScoreService {
     @Autowired
     private ScoreMapper scoreMapper;
-    @CacheEvict(cacheNames = "scop",allEntries = true)
-    public int addScore(Score score){
-        return  scoreMapper.insert(score);
+
+    @CacheEvict(cacheNames = "scop", allEntries = true)
+    public int addScore(Score score) {
+        return scoreMapper.insert(score);
     }
-    @Cacheable(cacheNames = "scop",key = "#selectBean.select+' '+#selectBean.city")
-   public List  selectScore(SelectBean selectBean){
-      if(selectBean.getSelect()==1) {
-       return  scoreMapper.selectSourcebyStu(selectBean.getCity());
-      }else {
-          return scoreMapper.selectSourcebyCur(selectBean.getCity());
-      }
-   }
+
+    @Cacheable(cacheNames = "scop", key = "#selectBean.select+' '+#selectBean.city")
+    public List selectScore(SelectBean selectBean) {
+        if (selectBean.getSelect() == 1) {
+            return scoreMapper.selectSourcebyStu(selectBean.getCity());
+        } else {
+            return scoreMapper.selectSourcebyCur(selectBean.getCity());
+        }
+    }
 }

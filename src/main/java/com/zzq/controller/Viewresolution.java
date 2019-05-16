@@ -14,10 +14,6 @@ public class Viewresolution {
         return "welcome";
     }
 
-   /* @RequestMapping("/member-list.html")
-    public String Memberlist(){
-        return "member-list";
-    }*/
 
     @RequestMapping("/member-del.html")
     public String MemberDel() {

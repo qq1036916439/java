@@ -1,8 +1,8 @@
 package com.zzq.utils;
 
 public class SelectBean {
-     private  Integer select;
-     private  Integer city;
+    private Integer select;
+    private Integer city;
 
     public Integer getCity() {
         return city;

@@ -12,49 +12,53 @@ import java.util.List;
 
 @Controller
 public class StudentController {
-        @Autowired
-        private StudentService studentService;
+
+    @Autowired
+    private StudentService studentService;
+
     @GetMapping("/student/sel/{id}")
-    public String getTeacherbyId(@PathVariable("id") Integer id, Model model){
+    public String getTeacherbyId(@PathVariable("id") Integer id, Model model) {
         Student student = studentService.getStuabyId(id);
-        model.addAttribute("stu",student);
+        model.addAttribute("stu", student);
         return "admin-add";
     }
 
-   @ResponseBody
+    @ResponseBody
     @GetMapping("/student/sel/json")
-    public List<Student> getSelectStu(){
-       List<Student> selectStu = studentService.getSelectStu();
+    public List<Student> getSelectStu() {
+        List<Student> selectStu = studentService.getSelectStu();
 
         return selectStu;
     }
 
     @ResponseBody
     @PostMapping("/student/add")
-    public String addStudent(Student student){
+    public String addStudent(Student student) {
         int i = studentService.addStu(student);
-        if(i>=1)
+        if (i >= 1)
             return "200";
 
         return "100";
     }
-    @GetMapping ("/student/addView")
-    public String addStudentView(Student stu,Model model){
+
+    @GetMapping("/student/addView")
+    public String addStudentView(Student stu, Model model) {
         //model.addAttribute("stu",stu);
         return "admin-add";
     }
 
     @GetMapping("/student/list")
-    public String getTeaList(@RequestParam(defaultValue = "1")Integer currentPage, Model model){
+    public String getTeaList(@RequestParam(defaultValue = "1") Integer currentPage, Model model) {
         PageUtil page = studentService.page(currentPage);
-        model.addAttribute("page",page);
+        model.addAttribute("page", page);
         return "admin-list";
     }
+
     @ResponseBody
     @PostMapping("/student/del")
-    public String deleteTeabyId(@RequestParam("ids[]")Integer[] ids){
-        if(ids==null){
-            return 0+" ";
+    public String deleteTeabyId(@RequestParam("ids[]") Integer[] ids) {
+        if (ids == null) {
+            return 0 + " ";
         }
         int i = studentService.deleteTeabyId(ids);
         return "i";

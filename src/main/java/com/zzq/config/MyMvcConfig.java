@@ -2,7 +2,8 @@ package com.zzq.config;
 
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
 
@@ -13,9 +14,8 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(userInterceptor).addPathPatterns("/**").excludePathPatterns("/login.html","/css/**","/fonts/**","/images/**","/js/**","/lib/**","/log");
+        registry.addInterceptor(userInterceptor).addPathPatterns("/**").excludePathPatterns("/login.html", "/css/**", "/fonts/**", "/images/**", "/js/**", "/lib/**", "/log");
     }
-
 
 
 }

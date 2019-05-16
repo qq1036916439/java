@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @Slf4j
 public class StudentService {
@@ -19,8 +20,8 @@ public class StudentService {
         PageUtil<Student> teaPageUtil = new PageUtil<>();
         int i = studentMapper.selectCount();
 
-        double dceil = Math.ceil((double) i / (double)5);
-        int j=(int) dceil;
+        double dceil = Math.ceil((double) i / (double) 5);
+        int j = (int) dceil;
         teaPageUtil.setTotal(i);
         teaPageUtil.setEachPage(5);
         teaPageUtil.setCurrentPage(currentPage);
@@ -46,12 +47,11 @@ public class StudentService {
 
     public int addStu(Student student) {
         Integer teaId = student.getStuId();
-        int i=0;
-        if(teaId!=null){
+        int i = 0;
+        if (teaId != null) {
             i = studentMapper.updateByPrimaryKey(student);
 
-        }
-        else {
+        } else {
             student.setStatus(1);
             i = studentMapper.insert(student);
         }
@@ -60,7 +60,7 @@ public class StudentService {
 
 
     public Student getStuabyId(Integer id) {
-       return studentMapper.selectByPrimaryKey(id);
+        return studentMapper.selectByPrimaryKey(id);
     }
 
     public List<Student> getSelectStu() {
